@@ -15,12 +15,11 @@ body {
 }
 
 .hero {
-    /* Imagen de fondo con capa oscura para legibilidad */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('images/header.png');
+                url('images/header2.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
+    background-attachment: fixed;
     color: white;
     padding: 120px 20px;
     text-align: center;
@@ -33,12 +32,13 @@ body {
 .hero p {
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
+
 /* Buscador Profesional */
 .search-box { 
     background: white; 
     border-radius: 50px; 
     padding: 10px 25px; 
-    margin-top: -45px; /* Sube el buscador sobre el hero */
+    margin-top: -45px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
@@ -57,15 +57,14 @@ body {
     letter-spacing: 1px;
 }
 
-/* Tarjetas de Servicios y Productos */
-.card-service { 
-    border: none; 
-    border-radius: 20px; 
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-    background: white; 
+/* --- CORRECCIÓN DE TARJETAS PARA BOTONES PAREJOS --- */
+.card-service {
+    display: flex;
+    flex-direction: column;
     height: 100%; 
-    overflow: hidden; /* Mantiene las fotos dentro de los bordes redondeados */
+    transition: 0.3s;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .card-service:hover { 
@@ -73,13 +72,16 @@ body {
     box-shadow: 0 15px 30px rgba(0,0,0,0.12);
 }
 
+/* Ajuste de títulos para que ocupen el mismo espacio */
 .card-service h5, .card-service h6 {
     margin-top: 15px;
     font-weight: 700;
+    min-height: 2.5rem; /* Reserva espacio para 2 líneas */
 }
 
-/* Botones de "Añadir al Carrito" */
-.btn-add { 
+/* Forzar que el botón se vaya al fondo */
+.card-service .btn-add { 
+    margin-top: auto; /* EMPUJA EL BOTÓN AL FINAL */
     border-radius: 50px; 
     font-weight: bold; 
     padding: 10px 20px;
@@ -93,7 +95,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Botón Flotante del Carrito (Mejorado) */
+/* Botón Flotante del Carrito */
 .cart-float { 
     position: fixed; 
     bottom: 25px; 
@@ -105,7 +107,7 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    background: #25d366; /* Verde WhatsApp */
+    background: #25d366; 
     border: 3px solid white; 
     color: white; 
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
@@ -118,99 +120,50 @@ body {
     background: #1ebe57;
 }
 
-/* Número Rojo del Carrito (Badge) */
 .badge-cart { 
     position: absolute; 
-    top: -12px;    /* Sube el número fuera del círculo verde */
-    right: -12px;  /* Mueve el número a la derecha fuera del círculo */
+    top: -5px; 
+    right: -5px; 
     background: #ff0000; 
     color: white; 
     border-radius: 50%; 
-    padding: 2px 8px; 
-    font-size: 14px; 
+    min-width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px; 
     font-weight: bold;
     border: 2px solid white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* Forzar que el icono esté centrado */
-.cart-float i {
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-}
-
-/* Ajustes para Imágenes y Carruseles */
+/* Imágenes y Carruseles */
 .carousel-inner img {
-    height: 200px;
-    object-fit: cover; /* Evita que las fotos se deformen */
+    height: 220px;
+    object-fit: cover; 
     background-color: #eee;
 }
 
-/* Estilo para el Modal del Carrito */
+/* --- MEJORAS VISUALES ADICIONALES --- */
+
 .modal-content {
     border-radius: 25px;
     border: none;
 }
 
-.modal-header {
-    border-bottom: none;
-    padding-top: 25px;
-}
-
-.modal-footer {
-    border-top: none;
-    padding-bottom: 25px;
-}
-
-/* --- NUEVAS MEJORAS PARA MISIÓN, VISIÓN Y FOOTER --- */
-
-.rounded-4 { 
-    border-radius: 1.5rem !important; 
-}
-
-.border-end { 
-    border-right: 1px solid #eee !important; 
-}
-
-/* Ajuste para móviles: quita el borde lateral y pone uno inferior */
-@media (max-width: 768px) { 
-    .border-end { 
-        border-right: none !important; 
-        border-bottom: 1px solid #eee; 
-    } 
-}
-
 footer {
-    background-color: #1a1a1a !important; /* Un oscuro más elegante */
+    background-color: #1a1a1a !important; 
 }
 
-footer h5 {
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-}
-
-footer a:hover { 
-    color: var(--nurse-info) !important; 
-    transition: 0.3s;
-}
-
-footer hr {
-    border-color: rgba(255,255,255,0.1);
-}
-
-/* Estilos para el Acordeón de Misión/Visión */
+/* Estilos para el Acordeón */
 .accordion-button:not(.collapsed) {
-    background-color: #f8f9fa; /* Color suave cuando está abierto */
+    background-color: #f8f9fa; 
+    color: var(--nurse-blue);
     box-shadow: none;
-}
-
-.accordion-button:focus {
-    box-shadow: none;
-    border-color: rgba(13, 110, 253, 0.25);
 }
 
 .accordion-item {
-    background-color: white;
+    border-radius: 15px !important;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
 }
-
