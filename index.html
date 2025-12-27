@@ -11,11 +11,20 @@
 <body>
 
 <div class="hero">
-    <h1 class="fw-bold display-4">IVÁN NURSE</h1>
-    <p class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm">
-   ✨ ¡Bienvenido! Selecciona tus servicios abajo
-</p>
-    <p class="lead">Cuidado experto y farmacia a domicilio</p>
+    <div class="container">
+        <h1 class="fw-bold display-4">IVÁN NURSE</h1>
+        <p class="lead">Cuidado experto y farmacia a domicilio</p>
+        
+        <p class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm mb-3">
+           ✨ ¡Bienvenido! Selecciona tus servicios abajo
+        </p>
+
+        <div class="d-block">
+            <span class="text-white-50 small fw-bold">
+                <i class="fas fa-clock"></i> Atención domiciliaria programada en Bogotá
+            </span>
+        </div>
+    </div>
 </div>
 
 <div class="container mt-4 mb-5">
@@ -79,8 +88,8 @@
             <div class="card card-service p-3">
                 <div id="carSer1" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Curacion+1" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Curacion+2" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/curacion1.png" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/curacion2.png" class="d-block w-100"></div>
                     </div>
                 </div>
                 <h5 class="fw-bold">Curación de Heridas</h5>
@@ -92,8 +101,8 @@
             <div class="card card-service p-3">
                 <div id="carSer2" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Sonda+1" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Sonda+2" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/sv1.png" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/sv2.webp" class="d-block w-100"></div>
                     </div>
                 </div>
                 <h5 class="fw-bold">Cambio Sonda Vesical</h5>
@@ -106,7 +115,9 @@
             <div class="card card-service p-3">
                 <div id="carSer3" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Oido+1" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/lavado1.webp" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/lavado2.jpg" class="d-block w-100"></div>
+                    
                     </div>
                 </div>
                 <h5 class="fw-bold">Lavado de Oído</h5>
@@ -119,11 +130,11 @@
             <div class="card card-service p-3">
                 <div id="carMed1" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Inyeccion+IM+1" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Inyeccion+IM+2" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/im1.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/im2.jpg" class="d-block w-100"></div>
                     </div>
                 </div>
-                <h5 class="fw-bold">Medicamento (IM / SC)</h5>
+                <h5 class="fw-bold">Medicamento (IM / SC Con Formula  Mèdica )</h5>
                 <p class="text-muted small mb-1">Intramuscular o Subcutánea.</p>
                 <h4 class="text-primary fw-bold">$15.000</h4>
                 <button onclick="agregarAlCarrito('Medicamento IM/SC', 15000)" class="btn btn-primary btn-add w-100">Añadir al Carrito</button>
@@ -134,12 +145,26 @@
             <div class="card card-service p-3">
                 <div id="carMed2" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Inyeccion+IV+1" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Inyeccion+IV+2" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/iv1.png" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/iv2.png" class="d-block w-100"></div>
                     </div>
                 </div>
-                <h5 class="fw-bold">Medicamento (IV)</h5>
+                <h5 class="fw-bold">Medicamento (IV Con Formula  Mèdica)</h5>
                 <p class="text-muted small mb-1">Administración Intravenosa directa.</p>
+                <h4 class="text-primary fw-bold">$25.000</h4>
+                <button onclick="agregarAlCarrito('Medicamento IV', 25000)" class="btn btn-primary btn-add w-100">Añadir al Carrito</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-service p-3">
+                <div id="carMed2" class="carousel slide mb-2" data-bs-ride="carousel">
+                    <div class="carousel-inner rounded">
+                        <div class="carousel-item active"><img src="images/puntos1.jpg" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/puntos2.png" class="d-block w-100"></div>
+                    </div>
+                </div>
+                <h5 class="fw-bold">Retiro de Puntos</h5>
+                <p class="text-muted small mb-1">Retiro De Puntos De Sutura</p>
                 <h4 class="text-primary fw-bold">$25.000</h4>
                 <button onclick="agregarAlCarrito('Medicamento IV', 25000)" class="btn btn-primary btn-add w-100">Añadir al Carrito</button>
             </div>
@@ -152,8 +177,8 @@
             <div class="card card-service p-3">
                 <div id="carAsis1" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Baño+En+Cama" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Baño+En+Ducha" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/baño1.png" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/baño2.png" class="d-block w-100"></div>
                     </div>
                 </div>
                 <h5 class="fw-bold">Baño Asistido (Ducha/Cama)</h5>
@@ -165,8 +190,8 @@
             <div class="card card-service p-3">
                 <div id="carAsis2" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/400x250?text=Acompañamiento+1" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/400x250?text=Acompañamiento+2" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="images/citas1.png" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="images/citas2.png"d-block w-100"></div>
                     </div>
                 </div>
                 <h5 class="fw-bold">Acompañamiento Citas</h5>
@@ -191,12 +216,12 @@
             <div class="card card-service p-3">
                 <div id="carouselProd1" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/300x200?text=Oximetro+Frontal" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=Oximetro+Uso" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="https://locatelcolombia.vtexassets.com/arquivos/ids/236238-800-800?v=637538535882470000&width=800&height=800&aspect=true" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="https://locatelcolombia.vtexassets.com/arquivos/ids/236240-800-800?v=638990902385970000&width=800&height=800&aspect=true" class="d-block w-100"></div>
                     </div>
                 </div>
                 <h6 class="fw-bold">Oxímetro de Pulso</h6>
-                <h4 class="text-success fw-bold">$85.000</h4>
+                <h4 class="text-success fw-bold">$130.000</h4>
                 <button onclick="agregarAlCarrito('Compra Oxímetro', 85000)" class="btn btn-success btn-add btn-sm w-100">Añadir al Carrito</button>
             </div>
         </div>
@@ -204,12 +229,12 @@
             <div class="card card-service p-3">
                 <div id="carouselProd2" class="carousel slide mb-2" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
-                        <div class="carousel-item active"><img src="https://via.placeholder.com/300x200?text=Tensiometro+Digital" class="d-block w-100"></div>
-                        <div class="carousel-item"><img src="https://via.placeholder.com/300x200?text=Tensiometro+Brazalete" class="d-block w-100"></div>
+                        <div class="carousel-item active"><img src="https://locatelcolombia.vtexassets.com/arquivos/ids/219899-800-800?v=637103075511370000&width=800&height=800&aspect=true" class="d-block w-100"></div>
+                        <div class="carousel-item"><img src="https://locatelcolombia.vtexassets.com/arquivos/ids/219900-800-800?v=638743751908000000&width=800&height=800&aspect=true" class="d-block w-100"></div>
                     </div>
                 </div>
                 <h6 class="fw-bold">Tensiómetro Digital</h6>
-                <h4 class="text-success fw-bold">$120.000</h4>
+                <h4 class="text-success fw-bold">$170.000</h4>
                 <button onclick="agregarAlCarrito('Compra Tensiómetro', 120000)" class="btn btn-success btn-add btn-sm w-100">Añadir al Carrito</button>
             </div>
         </div>
@@ -277,4 +302,3 @@
 </script>
 </body>
 </html>
-
