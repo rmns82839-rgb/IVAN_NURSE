@@ -17,7 +17,7 @@ body {
 .hero {
     /* Imagen de fondo con capa oscura para legibilidad */
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('https://st.depositphotos.com/1011643/1490/i/450/depositphotos_14901433-stock-photo-group-of-young-hospital-workers.jpg');
+                url('images/header.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
@@ -213,3 +213,4 @@ footer hr {
 .accordion-item {
     background-color: white;
 }
+
