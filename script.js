@@ -12,21 +12,16 @@ function ejecutarBusqueda() {
     if(!query) return alert("Por favor, escribe el nombre del producto.");
 
     const termino = encodeURIComponent(query);
-
-    // FARMACIAS QUE SÍ FUNCIONAN Y SON ESTABLES
     const farmacias = [
         { nombre: 'Cruz Verde', url: `https://www.cruzverde.com.co/search?query=${termino}` },
         { nombre: 'Farmatodo', url: `https://www.farmatodo.com.co/buscar?product=${termino}` },
         { nombre: 'Pasteur', url: `https://www.farmaciaspasteur.com.co/s/${termino}` }
     ];
 
-    // Limpiamos el contenedor
     contenedorBotones.innerHTML = '';
 
     if (seleccion === "todas") {
         contenedorBotones.innerHTML = '<p class="text-muted small w-100 mt-2">Compara precios en sitios seguros:</p>';
-        
-        // Creamos botones de farmacias
         farmacias.forEach(farma => {
             const btn = document.createElement('a');
             btn.href = farma.url;
@@ -36,134 +31,122 @@ function ejecutarBusqueda() {
             contenedorBotones.appendChild(btn);
         });
     } else {
-        // Abre solo la elegida
-        const farmaElegida = farmacias[parseInt(seleccion)];
-        window.open(farmaElegida.url, '_blank');
+        window.open(farmacias[parseInt(seleccion)].url, '_blank');
     }
 
-    // SIEMPRE añadir el Botón de Asesoría de Iván (WhatsApp)
     const btnAsesor = document.createElement('button');
     btnAsesor.className = "btn btn-success m-1 btn-sm fw-bold shadow-sm border-2 border-white";
-    btnAsesor.innerHTML = `<i class="fab fa-whatsapp"></i> ¿Deseas que yo lo busque y te lo lleve?`;
+    btnAsesor.innerHTML = `<i class="fab fa-whatsapp"></i> ¿Deseas que yo lo busque?`;
     btnAsesor.style.backgroundColor = "#25d366";
     btnAsesor.onclick = () => cotizarConIvan(query);
     contenedorBotones.appendChild(btnAsesor);
-
     contenedorBotones.classList.remove('d-none');
 }
 
 function cotizarConIvan(producto) {
-    const mensaje = encodeURIComponent(`Hola Iván, estoy buscando "${producto}". ¿Me puedes ayudar a cotizarlo en otras farmacias y traérmelo a casa?`);
-    window.open(`https://wa.me/573054494534?text=${mensaje}`, '_blank');
+    const fecha = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+    const mensaje = "CONSULTA MEDICAMENTOS (" + fecha + ")\n\nHola Ivan, estoy buscando: " + producto + ".\n¿Me ayudas a gestionarlo?";
+    window.open("https://wa.me/573054494534?text=" + encodeURIComponent(mensaje), '_blank');
 }
 
 /**
- * AÑADIR AL CARRITO
+ * GESTIÓN DEL CARRITO
  */
 function agregarAlCarrito(nombre, precio) {
     if (nombre === 'Mensajería Médica' || nombre === 'Reclamo EPS') {
-        const detalle = prompt("Por favor, describe brevemente el medicamento o trámite que necesitas:");
+        const detalle = prompt("Describe brevemente el trámite o medicamento:");
         if (!detalle) return; 
-        nombre = `${nombre} - ${detalle}`;
+        nombre = nombre + " - " + detalle;
     }
-
     carrito.push({ nombre, precio });
     actualizarCarrito();
-    
-    // Pequeña alerta visual de éxito
-    console.log(`✅ ${nombre} añadido al pedido.`);
 }
 
-/**
- * ACTUALIZAR VISTA DEL CARRITO (MODAL)
- */
 function actualizarCarrito() {
     const contador = document.getElementById('contador-carrito');
     const lista = document.getElementById('lista-carrito');
     let total = 0;
     
-    contador.innerText = carrito.length;
-    
+    if (contador) contador.innerText = carrito.length;
+    if(!lista) return;
+
     if(carrito.length === 0) {
-        lista.innerHTML = '<div class="text-center p-4"><i class="fas fa-shopping-basket fa-3x text-muted mb-2"></i><p>Tu carrito está vacío</p></div>';
+        lista.innerHTML = '<div class="text-center p-4"><p>Tu carrito está vacío</p></div>';
         return;
     }
 
     lista.innerHTML = carrito.map((item, index) => {
         total += item.precio;
         return `
-            <div class="d-flex justify-content-between align-items-center border-bottom py-3">
+            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                 <div>
-                    <div class="fw-bold" style="font-size: 0.9rem;">${item.nombre}</div>
+                    <div class="fw-bold" style="font-size: 0.85rem;">${item.nombre}</div>
                     <div class="text-primary small">$${item.precio.toLocaleString()}</div>
                 </div>
-                <button onclick="eliminarDelCarrito(${index})" class="btn btn-sm btn-outline-danger border-0">
+                <button onclick="eliminarDelCarrito(${index})" class="btn btn-sm text-danger border-0">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>`;
     }).join('');
     
     lista.innerHTML += `
-        <div class="d-flex justify-content-between mt-4 p-2 bg-light rounded">
-            <span class="fw-bold">TOTAL A PAGAR:</span>
-            <span class="fw-bold text-primary fs-5">$${total.toLocaleString()}</span>
+        <div class="d-flex justify-content-between mt-3 p-2 bg-light rounded">
+            <span class="fw-bold">TOTAL:</span>
+            <span class="fw-bold text-primary">$${total.toLocaleString()}</span>
         </div>`;
 }
 
-/**
- * ELIMINAR ÍTEM
- */
 function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
     actualizarCarrito();
 }
 
 /**
- * ENVIAR PEDIDO A WHATSAPP (CON MEJORAS DE FORMATO)
+ * ENVIAR PEDIDO (VERSIÓN SEGURA ANTI-ERRORES)
  */
 function enviarPedido() {
-    const direccion = document.getElementById('direccion-cliente').value.trim();
+    const direccionInput = document.getElementById('direccion-cliente');
+    const direccion = direccionInput ? direccionInput.value.trim() : "";
     
-    if(carrito.length === 0) {
-        alert("El carrito está vacío. Añade algún servicio primero.");
-        return;
-    }
-    
-    if(!direccion) {
-        alert("Por favor, ingresa tu dirección para el domicilio.");
+    if(carrito.length === 0 || !direccion) {
+        alert("Asegúrate de tener servicios en el carrito e ingresar tu dirección.");
         return;
     }
 
     const totalPedido = carrito.reduce((sum, item) => sum + item.precio, 0);
+    const fecha = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    // Construcción del mensaje con formato WhatsApp más profesional
-    let mensaje = `*🏥 NUEVO PEDIDO - IVÁN NURSE*%0A`;
-    mensaje += `------------------------------------------%0A`;
-    mensaje += `*Hola Iván, deseo solicitar los siguientes servicios:*%0A%0A`;
+    // CONSTRUCCIÓN DEL MENSAJE USANDO SÍMBOLOS BÁSICOS (+)
+    let mensaje = "*--- NUEVO PEDIDO - IVAN NURSE ---*\n";
+    mensaje += "Fecha: " + fecha + "\n";
+    mensaje += "------------------------------------------\n";
+    mensaje += "Hola Ivan, deseo solicitar estos servicios:\n\n";
     
-    carrito.forEach((item, i) => {
-        mensaje += `✅ *${item.nombre}* ($${item.precio.toLocaleString()})%0A`;
+    carrito.forEach((item) => {
+        mensaje += "+ " + item.nombre + " ($" + item.precio.toLocaleString() + ")\n";
     });
     
-    mensaje += `%0A------------------------------------------%0A`;
-    mensaje += `*💰 TOTAL:* $${totalPedido.toLocaleString()}%0A`;
-    mensaje += `*📍 DIRECCIÓN:* ${direccion}%0A`;
-    mensaje += `------------------------------------------%0A`;
-    mensaje += `_Enviado desde el catálogo digital_`;
+    mensaje += "\n------------------------------------------\n";
+    mensaje += "*TOTAL: $" + totalPedido.toLocaleString() + "*\n";
+    mensaje += "*DIRECCION: " + direccion + "*\n";
+    mensaje += "------------------------------------------\n";
+    mensaje += "_Enviado desde el catalogo digital_";
 
-    const numeroWhatsApp = "573054494534";
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
+    // CODIFICACIÓN FINAL
+    const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
+    window.open(urlFinal, '_blank');
 
-    // MEJORA: Vaciar el carrito después de enviar para evitar duplicados
+    // Limpieza automática
     setTimeout(() => {
-        if(confirm("¿Se abrió WhatsApp correctamente? Presiona OK para limpiar tu carrito.")) {
+        if(confirm("¿Se envió el mensaje? Dale OK para limpiar tu carrito.")) {
             carrito = [];
-            document.getElementById('direccion-cliente').value = ""; // Limpiar dirección
+            if(direccionInput) direccionInput.value = ""; 
             actualizarCarrito();
-            // Cerrar el modal automáticamente (si usas Bootstrap)
             const modalElement = document.getElementById('modalCarrito');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if(modal) modal.hide();
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if(modal) modal.hide();
+            }
         }
-    }, 1000);
+    }, 1500);
 }
