@@ -14,18 +14,25 @@ body {
     color: #333;
 }
 
-/* Sección Hero (Cabecera) */
-.hero { 
-    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
-                url('https://images.unsplash.com/photo-1576091160550-2173dbc9982a?auto=format&fit=crop&w=1200&q=80'); 
-    background-size: cover; 
+.hero {
+    /* Imagen de fondo con capa oscura para legibilidad */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://st.depositphotos.com/1011643/1490/i/450/depositphotos_14901433-stock-photo-group-of-young-hospital-workers.jpg');
+    background-size: cover;
     background-position: center;
-    color: white; 
-    padding: 80px 0; 
+    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
+    color: white;
+    padding: 120px 20px;
     text-align: center;
-    border-bottom: 5px solid var(--nurse-blue);
 }
 
+.hero h1 {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero p {
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
 /* Buscador Profesional */
 .search-box { 
     background: white; 
