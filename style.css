@@ -270,3 +270,33 @@ footer {
         right: 15px;
     }
 }
+
+/* ESTILOS NAVEGACIÓN INFERIOR */
+.nav-link-app {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link-app.active {
+    color: var(--azul-ivan); /* El azul que definimos antes */
+}
+
+.nav-link-app i {
+    margin-bottom: 2px;
+}
+
+.nav-link-app small {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* Espaciado para que el contenido no quede debajo de la barra */
+body {
+    padding-bottom: 70px; 
+}
+
+@media (min-width: 768px) {
+    body { padding-bottom: 0; }
+}
