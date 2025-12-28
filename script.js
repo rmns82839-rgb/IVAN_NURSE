@@ -116,9 +116,16 @@ function enviarPedido() {
 
     const totalPedido = carrito.reduce((sum, item) => sum + item.precio, 0);
     const fecha = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-
+function vaciarCarrito() {
+    if(confirm("¿Quieres quitar todos los servicios del carrito?")) {
+        carrito = [];
+        actualizarCarrito();
+    }
+}
     // CONSTRUCCIÓN DEL MENSAJE PROFESIONAL
-    let mensaje = "🏥 *--- NUEVO PEDIDO - IVÁN NURSE ---*\n";
+    // El código %F0%9F%91%8B es el emoji de la mano saludando 👋
+let mensaje = "🏥 *--- NUEVO PEDIDO - IVÁN NURSE ---*\n";
+mensaje += "¡Hola Iván Nurse! 👋 Vengo de la App y necesito información.\n";
     mensaje += "📅 *Fecha:* " + fecha + "\n";
     mensaje += "------------------------------------------\n";
     mensaje += "Hola Iván, deseo solicitar estos servicios:\n\n";
@@ -158,3 +165,4 @@ function enviarPedido() {
         }
     }, 2500);
 }
+
