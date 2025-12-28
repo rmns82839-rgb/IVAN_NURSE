@@ -432,8 +432,46 @@
     <i class="fab fa-whatsapp"></i>
     <span class="text-float">¿Necesitas ayuda?</span>
     </a>
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg text-center p-4">
+            <div class="modal-body">
+                <div class="mb-3">
+                    <i class="fas fa-check-circle fa-4x text-success animate__animated animate__bounceIn"></i>
+                </div>
+                <h3 class="fw-bold">¡Pedido Generado!</h3>
+                <p class="text-muted">Estamos preparando tu mensaje de WhatsApp. <br> Por favor, presiona "Enviar" en la siguiente pantalla.</p>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <nav class="navbar fixed-bottom navbar-light bg-white border-top d-md-none py-2">
+    <div class="container-fluid d-flex justify-content-around text-center">
+        <a href="#inicio" class="nav-link-app active">
+            <i class="fas fa-home"></i>
+            <small class="d-block">Inicio</small>
+        </a>
+        <a href="#buscador-seccion" class="nav-link-app">
+            <i class="fas fa-search"></i>
+            <small class="d-block">Buscar</small>
+        </a>
+        <a href="#carrito" class="nav-link-app position-relative">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="badge-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
+            <small class="d-block">Carrito</small>
+        </a>
+        <a href="#perfil" class="nav-link-app">
+            <i class="fas fa-user-md"></i>
+            <small class="d-block">Servicios</small>
+        </a>
+    </div>
+    </nav>
 </body>
 </html>
+
 
 
 
