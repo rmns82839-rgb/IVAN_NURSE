@@ -300,3 +300,69 @@ body {
 @media (min-width: 768px) {
     body { padding-bottom: 0; }
 }
+
+/* --- AJUSTES DE ESPACIADO PARA QUE NADA SE TAPE --- */
+
+/* 1. Sube el botón de WhatsApp para que no choque con la barra de navegación */
+.whatsapp-float {
+    bottom: 85px !important; 
+    right: 20px !important;
+}
+
+/* 2. Asegura que la barra inferior no sea transparente y esté siempre visible */
+.navbar.fixed-bottom {
+    background-color: white !important;
+    border-top: 1px solid #dee2e6;
+    z-index: 1060 !important;
+}
+
+/* 3. Evita que el contenido del carrito quede escondido detrás de los botones */
+.modal-body {
+    padding-bottom: 100px !important;
+}
+
+/* 4. Dale aire al final de la página principal */
+body {
+    padding-bottom: 90px !important;
+}
+
+/* --- AJUSTES FINALES DE ESPACIO (BOGOTÁ 2026) --- */
+
+/* 1. Sube el botón de WhatsApp para que flote sobre la barra inferior */
+.whatsapp-float {
+    bottom: 90px !important; 
+    right: 20px !important;
+    z-index: 1050 !important;
+}
+
+/* 2. Dale aire al cuerpo de la página para que el último servicio no quede tapado */
+body {
+    padding-bottom: 100px !important;
+}
+
+/* 3. Estilo para la Barra de Navegación Inferior */
+.navbar.fixed-bottom {
+    height: 75px;
+    background-color: #ffffff !important;
+    border-top: 1px solid #eeeeee;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 1060 !important;
+}
+
+/* 4. Ajuste del Badge (la bolita roja del carrito) */
+#badge-carrito {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border: 2px solid white;
+}
+
+/* 5. Asegurar que los modales se vean bien sobre la barra */
+.modal-footer {
+    padding-bottom: 20px; /* Si es en PC */
+}
+
+@media (max-width: 768px) {
+    .modal-body {
+        padding-bottom: 120px !important; /* Espacio extra para el pulgar en el móvil */
+    }
+}
