@@ -268,7 +268,64 @@
         </div>
     </div>
 </div>
+<section class="container my-5">
+    <h2 class="text-center mb-4 fw-bold text-primary">Preguntas Frecuentes</h2>
+    <div class="accordion shadow-sm" id="accordionFAQ">
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                    ¿Qué zonas de Bogotá cubren?
+                </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                    Cubrimos todas las localidades de Bogotá. Para zonas periféricas o municipios aledaños (Chía, Soacha, Cota), se puede aplicar un recargo adicional por desplazamiento.
+                </div>
+            </div>
+        </div>
 
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                    ¿El servicio incluye los materiales?
+                </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                    Sí, nuestros servicios básicos (inyectología, curaciones simples, pasos de sonda) incluyen los insumos estándar. Para tratamientos especializados, te informaremos si se requiere algún medicamento o apósito adicional.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                    ¿Son enfermeros certificados?
+                </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                    Absolutamente. Todo nuestro personal cuenta con título profesional o técnico en enfermería, Rethus vigente y amplia experiencia clínica para tu total tranquilidad.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                    ¿Cómo realizo el pago?
+                </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                <div class="accordion-body">
+                    Aceptamos pagos por Nequi, Daviplata o efectivo directamente al profesional al finalizar el procedimiento.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 <footer class="bg-dark text-white pt-5 pb-3 mt-5">
     <div class="container text-center">
         <div class="row">
@@ -318,7 +375,44 @@
         const msj = encodeURIComponent("*SOLICITUD DE PQRSF - IVÁN NURSE*\nHola, deseo dejar una sugerencia o reclamación:");
         window.open(`https://wa.me/573054494534?text=${msj}`, '_blank');
     }
+    document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si es la primera visita
+    if (!localStorage.getItem('bienvenidaMostrada')) {
+        // Esperar 3 segundos para que cargue la app y luego mostrar
+        setTimeout(() => {
+            const modalBienvenida = new bootstrap.Modal(document.getElementById('modalBienvenida'));
+            modalBienvenida.show();
+            // Marcar como mostrada para que no vuelva a aparecer
+            localStorage.setItem('bienvenidaMostrada', 'true');
+        }, 3000);
+    }
+});
 </script>
+    <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white border-0">
+                <h5 class="modal-title fw-bold">🎁 ¡Regalo de Bienvenida!</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <i class="fas fa-gift fa-4x text-primary mb-3"></i>
+                <h4 class="fw-bold">10% DE DESCUENTO</h4>
+                <p class="text-muted">En tu primer servicio de enfermería solicitado desde nuestra App.</p>
+                <div class="bg-light p-3 rounded-3 border-dashed mb-3">
+                    <span class="fw-bold fs-5 text-dark">CÓDIGO: <span class="text-primary">IVANNURSE10</span></span>
+                </div>
+                <p class="small text-secondary">Menciona este código al agendar por WhatsApp.</p>
+                <button type="button" class="btn btn-primary w-100 fw-bold py-2" data-bs-dismiss="modal">¡EMPEZAR AHORA!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-dashed { border: 2px dashed #0d6efd; }
+</style>
 </body>
 </html>
+
 
