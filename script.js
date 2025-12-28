@@ -102,7 +102,7 @@ function eliminarDelCarrito(index) {
 }
 
 /**
- * ENVIAR PEDIDO (VERSIÓN SEGURA ANTI-ERRORES)
+ * ENVIAR PEDIDO (VERSIÓN IVÁN NURSE 2026)
  */
 function enviarPedido() {
     const direccionInput = document.getElementById('direccion-cliente');
@@ -110,46 +110,51 @@ function enviarPedido() {
     
     if(carrito.length === 0 || !direccion) {
         alert("Asegúrate de tener servicios en el carrito e ingresar tu dirección.");
+        if(direccionInput) direccionInput.focus();
         return;
     }
 
     const totalPedido = carrito.reduce((sum, item) => sum + item.precio, 0);
     const fecha = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    // CONSTRUCCIÓN DEL MENSAJE USANDO SÍMBOLOS BÁSICOS (+)
-    let mensaje = "*--- NUEVO PEDIDO - IVAN NURSE ---*\n";
-    mensaje += "Fecha: " + fecha + "\n";
+    // CONSTRUCCIÓN DEL MENSAJE PROFESIONAL
+    let mensaje = "🏥 *--- NUEVO PEDIDO - IVÁN NURSE ---*\n";
+    mensaje += "📅 *Fecha:* " + fecha + "\n";
     mensaje += "------------------------------------------\n";
-    mensaje += "Hola Ivan, deseo solicitar estos servicios:\n\n";
+    mensaje += "Hola Iván, deseo solicitar estos servicios:\n\n";
     
     carrito.forEach((item) => {
-        mensaje += "+ " + item.nombre + " ($" + item.precio.toLocaleString() + ")\n";
+        mensaje += "✅ " + item.nombre + " ($" + item.precio.toLocaleString() + ")\n";
     });
     
     mensaje += "\n------------------------------------------\n";
-    mensaje += "*TOTAL: $" + totalPedido.toLocaleString() + "*\n";
-    mensaje += "*DIRECCION: " + direccion + "*\n";
+    mensaje += "💰 *TOTAL: $" + totalPedido.toLocaleString() + "*\n";
+    mensaje += "📍 *DIRECCIÓN:* " + direccion + "\n";
     mensaje += "------------------------------------------\n";
-    mensaje += "_Enviado desde el catalogo digital_";
-    // Dentro de la construcción del mensaje en enviarPedido():
-    mensaje += "\n🎟️ *CÓDIGO DESCUENTO:* IVANNURSE10 (10% OFF)\n";
+    mensaje += "🎟️ *CÓDIGO:* IVANNURSE10 (10% OFF)\n";
+    mensaje += "_Enviado desde el catálogo digital_";
 
-    // CODIFICACIÓN FINAL
-    const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
-    window.open(urlFinal, '_blank');
+    // 1. Mostrar el Modal de Confirmación que creamos antes
+    const modalConfirm = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+    modalConfirm.show();
 
-    // Limpieza automática
+    // 2. Esperar 2.5 segundos para la animación y enviar
     setTimeout(() => {
-        if(confirm("¿Se envió el mensaje? Dale OK para limpiar tu carrito.")) {
-            carrito = [];
-            if(direccionInput) direccionInput.value = ""; 
-            actualizarCarrito();
-            const modalElement = document.getElementById('modalCarrito');
-            if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if(modal) modal.hide();
-            }
-        }
-    }, 1500);
-}
+        const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
+        
+        // Usamos location.href para una transición más suave en móviles
+        window.location.href = urlFinal;
 
+        // 3. Limpieza silenciosa (Sin el molesto confirm)
+        carrito = [];
+        if(direccionInput) direccionInput.value = ""; 
+        actualizarCarrito();
+        
+        // Cerrar el carrito de fondo si está abierto
+        const modalCarritoElem = document.getElementById('modalCarrito');
+        if (modalCarritoElem) {
+            const modalC = bootstrap.Modal.getInstance(modalCarritoElem);
+            if(modalC) modalC.hide();
+        }
+    }, 2500);
+}
