@@ -448,27 +448,25 @@
         </div>
     </div>
     </div>
-    <nav class="navbar fixed-bottom navbar-light bg-white border-top d-md-none py-2">
+    <nav class="navbar fixed-bottom navbar-light bg-white border-top py-2">
     <div class="container-fluid d-flex justify-content-around text-center">
-        <a href="#inicio" class="nav-link-app active">
-            <i class="fas fa-home"></i>
+        <a href="#" class="nav-link text-primary">
+            <i class="fas fa-home fs-4"></i>
             <small class="d-block">Inicio</small>
         </a>
-        <a href="#buscador-seccion" class="nav-link-app">
-            <i class="fas fa-search"></i>
-            <small class="d-block">Buscar</small>
-        </a>
-        <a href="#carrito" class="nav-link-app position-relative">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="badge-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
+        <a href="javascript:void(0)" class="nav-link text-muted" data-bs-toggle="modal" data-bs-target="#modalCarrito">
+            <div class="position-relative d-inline-block">
+                <i class="fas fa-shopping-cart fs-4"></i>
+                <span id="badge-carrito" class="badge rounded-pill bg-danger">0</span>
+            </div>
             <small class="d-block">Carrito</small>
         </a>
-        <a href="#perfil" class="nav-link-app">
-            <i class="fas fa-user-md"></i>
+        <a href="#servicios" class="nav-link text-muted">
+            <i class="fas fa-user-md fs-4"></i>
             <small class="d-block">Servicios</small>
         </a>
     </div>
-    </nav>
+</nav>
     <div class="modal fade" id="modalCarrito" tabindex="-1" aria-labelledby="modalCarritoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
@@ -519,6 +517,7 @@
         </div>
 </body>
 </html>
+
 
 
 
