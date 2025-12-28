@@ -168,3 +168,65 @@ footer {
     border: 1px solid #eee;
 }
 
+/* =========================================
+   SECCIÓN BUSCADOR PROFESIONAL IVÁN NURSE
+   ========================================= */
+
+:root {
+    --azul-ivan: #0056b3; /* Azul profesional médico */
+    --azul-oscuro: #003d7a;
+    --celeste-claro: #f0f7ff;
+}
+
+/* Caja principal del buscador */
+.search-box {
+    transition: all 0.3s ease;
+    border-radius: 20px !important;
+    background: white;
+    border: 1px solid #eef2f7;
+}
+
+/* Efecto al tocar cualquier parte del buscador */
+.search-box:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important;
+}
+
+/* Estilo para el botón con tus colores */
+.btn-ivan {
+    background-color: var(--azul-ivan) !important;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-ivan:hover {
+    background-color: var(--azul-oscuro) !important;
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+}
+
+/* Estilo para los campos de texto y selector */
+.input-ivan:focus, .custom-select:focus {
+    background-color: var(--celeste-claro) !important;
+    border-left: 4px solid var(--azul-ivan) !important;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Ajustes exclusivos para Celulares */
+@media (max-width: 768px) {
+    .search-box .form-select, 
+    .search-box .form-control, 
+    .search-box .btn-ivan {
+        width: 100%; /* Se apilan uno sobre otro */
+        margin-bottom: 8px; /* Espacio entre ellos */
+        border-radius: 10px !important; 
+        height: 50px; /* Más fáciles de tocar */
+    }
+    
+    .search-box {
+        padding: 15px !important;
+    }
+}
+
