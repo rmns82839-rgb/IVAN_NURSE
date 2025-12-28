@@ -131,6 +131,8 @@ function enviarPedido() {
     mensaje += "*DIRECCION: " + direccion + "*\n";
     mensaje += "------------------------------------------\n";
     mensaje += "_Enviado desde el catalogo digital_";
+    // Dentro de la construcción del mensaje en enviarPedido():
+    mensaje += "\n🎟️ *CÓDIGO DESCUENTO:* IVANNURSE10 (10% OFF)\n";
 
     // CODIFICACIÓN FINAL
     const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
@@ -150,3 +152,4 @@ function enviarPedido() {
         }
     }, 1500);
 }
+
