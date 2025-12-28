@@ -1,5 +1,6 @@
 // Variable global para almacenar el pedido
 let carrito = [];
+let timerEnvio;
 
 /**
  * BUSCADOR DE PRECIOS
@@ -26,16 +27,16 @@ function ejecutarBusqueda() {
             const btn = document.createElement('a');
             btn.href = farma.url;
             btn.target = "_blank";
-            btn.className = "btn btn-outline-primary m-1 btn-sm fw-bold shadow-sm";
+            btn.className = "btn btn-outline-primary m-1 btn-sm fw-bold shadow-sm btn-hover-effect";
             btn.innerHTML = `<i class="fas fa-external-link-alt"></i> ${farma.nombre}`;
             contenedorBotones.appendChild(btn);
         });
-    } else {
-        window.open(farmacias[parseInt(seleccion)].url, '_blank');
+    } else if (seleccion !== "") {
+        window.open(seleccion + termino, '_blank');
     }
 
     const btnAsesor = document.createElement('button');
-    btnAsesor.className = "btn btn-success m-1 btn-sm fw-bold shadow-sm border-2 border-white";
+    btnAsesor.className = "btn btn-success m-1 btn-sm fw-bold shadow-sm border-2 border-white btn-hover-effect";
     btnAsesor.innerHTML = `<i class="fab fa-whatsapp"></i> ¿Deseas que yo lo busque?`;
     btnAsesor.style.backgroundColor = "#25d366";
     btnAsesor.onclick = () => cotizarConIvan(query);
@@ -60,18 +61,30 @@ function agregarAlCarrito(nombre, precio) {
     }
     carrito.push({ nombre, precio });
     actualizarCarrito();
+    
+    if(event && event.target) {
+        const originalText = event.target.innerText;
+        event.target.innerText = "¡Agregado! ✅";
+        setTimeout(() => event.target.innerText = originalText, 1000);
+    }
 }
 
 function actualizarCarrito() {
-    const contador = document.getElementById('contador-carrito');
+    const contador = document.getElementById('badge-carrito'); 
     const lista = document.getElementById('lista-carrito');
+    const totalCarritoModal = document.getElementById('total-carrito');
     let total = 0;
     
-    if (contador) contador.innerText = carrito.length;
+    if (contador) {
+        contador.innerText = carrito.length;
+        contador.style.display = carrito.length > 0 ? 'inline-block' : 'none';
+    }
+
     if(!lista) return;
 
     if(carrito.length === 0) {
-        lista.innerHTML = '<div class="text-center p-4"><p>Tu carrito está vacío</p></div>';
+        lista.innerHTML = '<div class="text-center p-4"><p class="text-muted">No hay servicios seleccionados.</p></div>';
+        if(totalCarritoModal) totalCarritoModal.innerText = "$0";
         return;
     }
 
@@ -89,8 +102,10 @@ function actualizarCarrito() {
             </div>`;
     }).join('');
     
+    if(totalCarritoModal) totalCarritoModal.innerText = `$${total.toLocaleString()}`;
+    
     lista.innerHTML += `
-        <div class="d-flex justify-content-between mt-3 p-2 bg-light rounded">
+        <div class="d-flex justify-content-between mt-3 p-2 bg-light rounded border">
             <span class="fw-bold">TOTAL:</span>
             <span class="fw-bold text-primary">$${total.toLocaleString()}</span>
         </div>`;
@@ -101,68 +116,99 @@ function eliminarDelCarrito(index) {
     actualizarCarrito();
 }
 
-/**
- * ENVIAR PEDIDO (VERSIÓN IVÁN NURSE 2026)
- */
 function enviarPedido() {
     const direccionInput = document.getElementById('direccion-cliente');
-    const direccion = direccionInput ? direccionInput.value.trim() : "";
-    
-    if(carrito.length === 0 || !direccion) {
-        alert("Asegúrate de tener servicios en el carrito e ingresar tu dirección.");
-        if(direccionInput) direccionInput.focus();
+    const barrioInput = document.getElementById('barrio-cliente');
+    const alergiasInput = document.getElementById('alergias-cliente');
+    const obsInput = document.getElementById('observaciones-cliente');
+
+    if(carrito.length === 0) { alert("El carrito está vacío."); return; }
+    if(!direccionInput || !direccionInput.value.trim()) {
+        alert("Por favor, ingresa tu dirección en Bogotá.");
+        direccionInput.focus();
         return;
     }
 
+    const direccion = direccionInput.value.trim();
+    const barrio = (barrioInput && barrioInput.value.trim()) ? barrioInput.value.trim() : "No especificado";
+    const alergias = (alergiasInput && alergiasInput.value.trim()) ? alergiasInput.value.trim() : "Ninguna / No reporta";
+    const observaciones = (obsInput && obsInput.value.trim()) ? obsInput.value.trim() : "Sin observaciones adicionales";
     const totalPedido = carrito.reduce((sum, item) => sum + item.precio, 0);
-    const fecha = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-function vaciarCarrito() {
-    if(confirm("¿Quieres quitar todos los servicios del carrito?")) {
-        carrito = [];
-        actualizarCarrito();
-    }
-}
-    // CONSTRUCCIÓN DEL MENSAJE PROFESIONAL
-    // El código %F0%9F%91%8B es el emoji de la mano saludando 👋
-let mensaje = "🏥 *--- NUEVO PEDIDO - IVÁN NURSE ---*\n";
-mensaje += "¡Hola Iván Nurse! 👋 Vengo de la App y necesito información.\n";
-    mensaje += "📅 *Fecha:* " + fecha + "\n";
-    mensaje += "------------------------------------------\n";
-    mensaje += "Hola Iván, deseo solicitar estos servicios:\n\n";
+    
+    // Fecha automática para Bogotá
+    const fecha = new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // --- ICONOS SEGUROS (TEXTO PURO PARA EVITAR ROMBOS) ---
+    const iHosp   = "HOSPITAL:"; 
+    const iHola   = "SALUDO:"; 
+    const iCal    = "FECHA:"; 
+    const iCheck  = "[X]";       
+    const iMoney  = "TOTAL:"; 
+    const iPin    = "DIR:"; 
+    const iCasa   = "BARRIO:"; 
+    const iWarn   = "ALERGIAS:"; 
+    const iNote   = "OBS:"; 
+    const iTicket = "CODIGO:"; 
+    const n = "\n";
+
+    // CONSTRUCCIÓN DEL MENSAJE
+    let mensaje = iHosp + " *--- NUEVO PEDIDO - IVÁN NURSE ---*" + n;
+    mensaje += "¡Hola Iván Nurse! " + iHola + " Vengo de la App." + n;
+    mensaje += iCal + " *Fecha:* " + fecha + n;
+    mensaje += "------------------------------------------" + n;
+    mensaje += "Deseo solicitar estos servicios:" + n + n;
     
     carrito.forEach((item) => {
-        mensaje += "✅ " + item.nombre + " ($" + item.precio.toLocaleString() + ")\n";
+        mensaje += iCheck + " " + item.nombre + " ($" + item.precio.toLocaleString() + ")" + n;
     });
     
-    mensaje += "\n------------------------------------------\n";
-    mensaje += "💰 *TOTAL: $" + totalPedido.toLocaleString() + "*\n";
-    mensaje += "📍 *DIRECCIÓN:* " + direccion + "\n";
-    mensaje += "------------------------------------------\n";
-    mensaje += "🎟️ *CÓDIGO:* IVANNURSE10 (10% OFF)\n";
+    mensaje += n + "------------------------------------------" + n;
+    mensaje += iMoney + " *TOTAL: $" + totalPedido.toLocaleString() + "*" + n;
+    mensaje += iPin + " *DIRECCIÓN:* " + direccion + n;
+    mensaje += iCasa + " *BARRIO:* " + barrio + n;
+    mensaje += iWarn + " *ALERGIAS:* " + alergias + n;
+    mensaje += iNote + " *OBS:* " + observaciones + n;
+    mensaje += "------------------------------------------" + n;
+    mensaje += iTicket + " *CÓDIGO:* IVANNURSE10 (10% OFF)" + n;
     mensaje += "_Enviado desde el catálogo digital_";
 
-    // 1. Mostrar el Modal de Confirmación que creamos antes
+    // 1. MOSTRAR MODAL DE CARGA
     const modalConfirm = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
     modalConfirm.show();
 
-    // 2. Esperar 2.5 segundos para la animación y enviar
+    // 2. ANIMAR BARRA
+    const barra = document.getElementById('barra-progreso');
+    let progreso = 0;
+    const intevaloBarra = setInterval(() => {
+        progreso += 20;
+        barra.style.width = progreso + "%";
+        if(progreso >= 100) clearInterval(intevaloBarra);
+    }, 300);
+
+    // 3. EJECUTAR ENVÍO A WHATSAPP
     setTimeout(() => {
         const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
-        
-        // Usamos location.href para una transición más suave en móviles
-        window.location.href = urlFinal;
+        window.open(urlFinal, '_blank'); 
 
-        // 3. Limpieza silenciosa (Sin el molesto confirm)
+        // Limpiar carrito y campos
         carrito = [];
-        if(direccionInput) direccionInput.value = ""; 
         actualizarCarrito();
+        direccionInput.value = "";
+        if(barrioInput) barrioInput.value = "";
+        if(alergiasInput) alergiasInput.value = "";
+        if(obsInput) obsInput.value = "";
         
-        // Cerrar el carrito de fondo si está abierto
-        const modalCarritoElem = document.getElementById('modalCarrito');
-        if (modalCarritoElem) {
-            const modalC = bootstrap.Modal.getInstance(modalCarritoElem);
-            if(modalC) modalC.hide();
-        }
-    }, 2500);
-}
+        modalConfirm.hide();
+        
+        // Cerrar carrito
+        const mCarrito = bootstrap.Modal.getInstance(document.getElementById('modalCarrito'));
+        if(mCarrito) mCarrito.hide();
 
+        // Mostrar Éxito Final
+        setTimeout(() => {
+            const exito = new bootstrap.Modal(document.getElementById('modalExitoFinal'));
+            exito.show();
+        }, 800);
+        
+    }, 2000);
+}
