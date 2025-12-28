@@ -230,3 +230,43 @@ footer {
     }
 }
 
+/* BOTÓN WHATSAPP PROFESIONAL */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366; /* Verde oficial de WhatsApp */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px; /* Estilo píldora como el buscador */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.whatsapp-float i {
+    font-size: 24px;
+}
+
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* En celulares muy pequeños, quitamos el texto y dejamos solo el círculo */
+@media (max-width: 576px) {
+    .text-float {
+        display: none;
+    }
+    .whatsapp-float {
+        padding: 15px;
+        border-radius: 50%;
+        bottom: 15px;
+        right: 15px;
+    }
+}
