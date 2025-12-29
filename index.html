@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Iván Nurse | Enfermería Profesional a Domicilio en Bogotá</title>
@@ -347,11 +348,18 @@
                 <button onclick="abrirPQRSF()" class="btn btn-outline-light btn-sm">PQRSF y Sugerencias</button>
             </div>
         </div>
+        <h6>Iván David Montes Arrieta</h6>
+        <p class="small">Auxiliar en Enfermería Profesional | Registro en Salud: 1126242776</p>
+        <p class="small text-muted">Certificado por Centro INCA y Fundación Nuestra Señora de la Esperanza</p>
+        <a href="https://rmns82839-rgb.github.io/hv-enfermer-a-/" target="_blank" class="btn btn-outline-info btn-sm">Ver Hoja de Vida Completa</a>
+    </div>
         <hr>
         <p class="small opacity-50">&copy; 2025 Iván Nurse - Todos los derechos reservados.</p>
     </div>
 </footer>
-
+<footer class="bg-dark text-white pt-4">
+    <div class="container text-center">
+        
 <div class="modal fade" id="modalCarrito" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
@@ -364,7 +372,12 @@
                     <p class="text-center text-muted">No hay servicios seleccionados.</p>
                 </div>
                 <hr class="my-3">
+                <hr class="my-3">
                 <div class="row g-2">
+                    <div class="col-12 mb-2">
+                        <label class="fw-bold mb-1 small text-dark"><i class="fas fa-user text-primary"></i> Nombre del Paciente:</label>
+                        <input type="text" id="nombre-cliente" class="form-control" placeholder="Ej: Iván Montes">
+                    </div>
                     <div class="col-12 mb-2">
                         <label class="fw-bold mb-1 small text-dark"><i class="fas fa-map-marker-alt text-primary"></i> Dirección en Bogotá:</label>
                         <input type="text" id="direccion-cliente" class="form-control" placeholder="Ej: Calle 100 #15-20, Apto 301">
@@ -374,8 +387,20 @@
                         <input type="text" id="barrio-cliente" class="form-control" placeholder="Ej: Cedritos / Suba">
                     </div>
                     <div class="col-12 mb-2">
+                         <label class="fw-bold mb-1 small text-dark"><i class="fas fa-calendar-day text-primary"></i> Fecha para la Cita:</label>
+                         <input type="date" id="fecha-cita" class="form-control">
+                    </div>
+                    <div class="col-12 mb-2">
                         <label class="fw-bold mb-1 small text-dark"><i class="fas fa-pills text-danger"></i> ¿Alergias a medicamentos?</label>
                         <input type="text" id="alergias-cliente" class="form-control" placeholder="Si no tiene, dejar en blanco">
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label class="fw-bold mb-1 small text-dark"><i class="fas fa-clock text-primary"></i> Horario de preferencia:</label>
+                        <select id="horario-cliente" class="form-select">
+                            <option value="Mañana (8am - 12pm)">Mañana (8am - 12pm)</option>
+                            <option value="Tarde (1pm - 5pm)">Tarde (1pm - 5pm)</option>
+                            <option value="Urgente / Lo antes posible">Urgente / Lo antes posible</option>
+                        </select>
                     </div>
                     <div class="col-12 mb-2">
                         <label class="fw-bold mb-1 small text-dark"><i class="fas fa-notes-medical text-primary"></i> Observaciones:</label>
@@ -506,6 +531,7 @@
             }, 3000);
         }
     });
+
 </script>
 </body>
 </html>
