@@ -53,21 +53,31 @@ function cotizarConIvan(producto) {
 /**
  * GESTIÓN DEL CARRITO
  */
+// Mejora: Feedback visual y manejo de duplicados
+// Mejora: Feedback visual y manejo de duplicados
 function agregarAlCarrito(nombre, precio) {
+    // Verificar si el servicio ya está (opcional, según prefieras)
+    const existe = carrito.find(item => item.nombre === nombre);
+    
     if (nombre === 'Mensajería Médica' || nombre === 'Reclamo EPS') {
-        const detalle = prompt("Describe brevemente el trámite o medicamento:");
+        const detalle = prompt("Describe el medicamento o trámite:");
         if (!detalle) return; 
-        nombre = nombre + " - " + detalle;
+        nombre = `${nombre} (${detalle})`;
     }
+
     carrito.push({ nombre, precio });
     actualizarCarrito();
     
-    if(event && event.target) {
-        const originalText = event.target.innerText;
-        event.target.innerText = "¡Agregado! ✅";
-        setTimeout(() => event.target.innerText = originalText, 1000);
-    }
+    // Feedback con SweetAlert2 (recomiendo esta librería para alertas pro)
+    // En lugar de alert(), usa algo más moderno
+    const toast = document.createElement('div');
+    toast.className = "position-fixed top-0 start-50 translate-middle-x bg-success text-white p-3 rounded-bottom shadow";
+    toast.style.zIndex = "9999";
+    toast.innerHTML = `✅ ${nombre} añadido al carrito`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
 }
+
 
 function actualizarCarrito() {
     const contador = document.getElementById('badge-carrito'); 
@@ -117,98 +127,93 @@ function eliminarDelCarrito(index) {
 }
 
 function enviarPedido() {
+    // 1. Capturar los elementos del formulario
+    const nombreInput = document.getElementById('nombre-cliente');
     const direccionInput = document.getElementById('direccion-cliente');
     const barrioInput = document.getElementById('barrio-cliente');
+    const fechaCitaInput = document.getElementById('fecha-cita');
     const alergiasInput = document.getElementById('alergias-cliente');
+    const horarioInput = document.getElementById('horario-cliente');
     const obsInput = document.getElementById('observaciones-cliente');
 
-    if(carrito.length === 0) { alert("El carrito está vacío."); return; }
-    if(!direccionInput || !direccionInput.value.trim()) {
-        alert("Por favor, ingresa tu dirección en Bogotá.");
-        direccionInput.focus();
+    // 2. Validaciones obligatorias
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+    if (!nombreInput.value.trim() || !direccionInput.value.trim() || !fechaCitaInput.value) {
+        alert("Por favor completa: Nombre, Dirección y Fecha de la Cita.");
         return;
     }
 
+    // 3. Procesar datos
+    const nombre = nombreInput.value.trim().toUpperCase();
     const direccion = direccionInput.value.trim();
-    const barrio = (barrioInput && barrioInput.value.trim()) ? barrioInput.value.trim() : "No especificado";
-    const alergias = (alergiasInput && alergiasInput.value.trim()) ? alergiasInput.value.trim() : "Ninguna / No reporta";
-    const observaciones = (obsInput && obsInput.value.trim()) ? obsInput.value.trim() : "Sin observaciones adicionales";
+    const barrio = barrioInput.value.trim() || "No especificado";
+    const fechaCita = fechaCitaInput.value; // Formato YYYY-MM-DD
+    const alergias = alergiasInput.value.trim() || "Ninguna / No reporta";
+    const horario = horarioInput.value;
+    const observaciones = obsInput.value.trim() || "Sin observaciones adicionales";
     const totalPedido = carrito.reduce((sum, item) => sum + item.precio, 0);
     
-    // Fecha automática para Bogotá
-    const fecha = new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
+    // Fecha actual para el registro
+    const registro = new Date().toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    // --- ICONOS SEGUROS (TEXTO PURO PARA EVITAR ROMBOS) ---
-    const iHosp   = "HOSPITAL:"; 
-    const iHola   = "SALUDO:"; 
-    const iCal    = "FECHA:"; 
-    const iCheck  = "[X]";       
-    const iMoney  = "TOTAL:"; 
-    const iPin    = "DIR:"; 
-    const iCasa   = "BARRIO:"; 
-    const iWarn   = "ALERGIAS:"; 
-    const iNote   = "OBS:"; 
-    const iTicket = "CODIGO:"; 
-    const n = "\n";
-
-    // CONSTRUCCIÓN DEL MENSAJE
-    let mensaje = iHosp + " *--- NUEVO PEDIDO - IVÁN NURSE ---*" + n;
-    mensaje += "¡Hola Iván Nurse! " + iHola + " Vengo de la App." + n;
-    mensaje += iCal + " *Fecha:* " + fecha + n;
-    mensaje += "------------------------------------------" + n;
-    mensaje += "Deseo solicitar estos servicios:" + n + n;
+    // 4. Construcción del mensaje (TEXTO LIMPIO - SIN EMOJIS PARA EVITAR ROMBOS)
+    let msj = "NUEVO PEDIDO | IVAN NURSE\n";
+    msj += "Registro: " + registro + "\n";
+    msj += "--------------------------------------\n\n";
     
+    msj += "PACIENTE: " + nombre + "\n";
+    msj += "DIRECCION: " + direccion + " (" + barrio + ")\n";
+    msj += "FECHA CITA: " + fechaCita + "\n";
+    msj += "HORARIO: " + horario + "\n";
+    msj += "ALERGIAS: " + alergias + "\n\n";
+    
+    msj += "SERVICIOS:\n";
     carrito.forEach((item) => {
-        mensaje += iCheck + " " + item.nombre + " ($" + item.precio.toLocaleString() + ")" + n;
+        msj += "- " + item.nombre + " ($" + item.precio.toLocaleString() + ")\n";
     });
     
-    mensaje += n + "------------------------------------------" + n;
-    mensaje += iMoney + " *TOTAL: $" + totalPedido.toLocaleString() + "*" + n;
-    mensaje += iPin + " *DIRECCIÓN:* " + direccion + n;
-    mensaje += iCasa + " *BARRIO:* " + barrio + n;
-    mensaje += iWarn + " *ALERGIAS:* " + alergias + n;
-    mensaje += iNote + " *OBS:* " + observaciones + n;
-    mensaje += "------------------------------------------" + n;
-    mensaje += iTicket + " *CÓDIGO:* IVANNURSE10 (10% OFF)" + n;
-    mensaje += "_Enviado desde el catálogo digital_";
+    msj += "\nTOTAL A COBRAR: $" + totalPedido.toLocaleString() + "\n";
+    msj += "--------------------------------------\n";
+    msj += "NOTAS: " + observaciones + "\n\n";
+    msj += "Por favor, confirma la disponibilidad para asignar un profesional.\n\n";
+    msj += "CODIGO: IVANNURSE10 (10% OFF)\n";
+    msj += "Enviado desde el catalogo digital";
 
-    // 1. MOSTRAR MODAL DE CARGA
+    // 5. Animación de la barra de progreso
     const modalConfirm = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
     modalConfirm.show();
 
-    // 2. ANIMAR BARRA
     const barra = document.getElementById('barra-progreso');
     let progreso = 0;
-    const intevaloBarra = setInterval(() => {
-        progreso += 20;
-        barra.style.width = progreso + "%";
-        if(progreso >= 100) clearInterval(intevaloBarra);
-    }, 300);
+    const intervaloBarra = setInterval(() => {
+        progreso += 25;
+        if(barra) barra.style.width = progreso + "%";
+        if(progreso >= 100) clearInterval(intervaloBarra);
+    }, 200);
 
-    // 3. EJECUTAR ENVÍO A WHATSAPP
+    // 6. Redirección a WhatsApp
     setTimeout(() => {
-        const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(mensaje);
+        const urlFinal = "https://wa.me/573054494534?text=" + encodeURIComponent(msj);
         window.open(urlFinal, '_blank'); 
 
-        // Limpiar carrito y campos
+        // Limpiar formulario y carrito
         carrito = [];
         actualizarCarrito();
+        nombreInput.value = "";
         direccionInput.value = "";
-        if(barrioInput) barrioInput.value = "";
-        if(alergiasInput) alergiasInput.value = "";
-        if(obsInput) obsInput.value = "";
+        barrioInput.value = "";
+        fechaCitaInput.value = "";
+        alergiasInput.value = "";
+        obsInput.value = "";
         
         modalConfirm.hide();
         
-        // Cerrar carrito
+        // Cerrar modal del carrito
         const mCarrito = bootstrap.Modal.getInstance(document.getElementById('modalCarrito'));
         if(mCarrito) mCarrito.hide();
-
-        // Mostrar Éxito Final
-        setTimeout(() => {
-            const exito = new bootstrap.Modal(document.getElementById('modalExitoFinal'));
-            exito.show();
-        }, 800);
         
-    }, 2000);
+    }, 1500);
 }
