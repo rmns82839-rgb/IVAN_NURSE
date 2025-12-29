@@ -6,25 +6,24 @@
     --dark-text: #2d3436;
     --whatsapp-green: #25d366;
     --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Mejora de curva de animación */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #f4f7f6;
     color: var(--dark-text);
-    padding-bottom: 80px; /* Espacio para el menú inferior */
-    overflow-x: hidden; /* Evita scroll horizontal */
-    -webkit-font-smoothing: antialiased; /* Suavizado de fuente */
+    padding-bottom: 80px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* --- Hero Section Elegante con Imagen de Fondo --- */
+/* --- Hero Section --- */
 .hero {
-    /* Se añade la imagen logo.png con un degradado para que el texto sea legible */
     background: linear-gradient(135deg, rgba(0, 45, 95, 0.92) 0%, rgba(0, 168, 232, 0.7) 100%), 
                 url('images/header.png') no-repeat center center;
     background-size: cover;
-    background-attachment: fixed; /* Efecto Parallax suave */
+    background-attachment: fixed;
     color: white;
     padding: 80px 0 120px;
     border-radius: 0 0 40px 40px;
@@ -38,15 +37,15 @@ body {
 .hero h1 {
     letter-spacing: 2px;
     text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
-    font-size: clamp(2.2rem, 8vw, 3.8rem); /* Título responsivo */
+    font-size: clamp(2.2rem, 8vw, 3.8rem);
     font-weight: 800;
 }
 
-/* --- Buscador con Estilo Premium --- */
+/* --- Buscador Premium --- */
 .search-box {
     border: none !important;
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px); /* Efecto cristal */
+    backdrop-filter: blur(10px);
     transition: var(--transition);
     position: relative;
     z-index: 10;
@@ -66,26 +65,19 @@ body {
     border: 1px solid #eee !important;
 }
 
-.input-ivan:focus {
-    border-color: var(--accent-blue) !important;
-    box-shadow: 0 0 0 4px rgba(0, 168, 232, 0.1) !important;
-}
-
-/* --- Tarjetas de Servicio (Alineación de Botones) --- */
+/* --- Tarjetas de Servicio --- */
 .card-service {
-    border: none !important;
-    border-radius: 24px !important; /* Más redondeado, más moderno */
+    border: 1px solid rgba(0,0,0,0.03) !important;
+    border-radius: 24px !important;
     background: #fff;
     box-shadow: var(--card-shadow);
     transition: var(--transition);
     overflow: hidden;
     height: 100%;
-    /* Flexbox para alinear botones al final */
     display: flex;
     flex-direction: column;
     position: relative;
     z-index: 5;
-    border: 1px solid rgba(0,0,0,0.03) !important;
 }
 
 .card-service:hover {
@@ -98,33 +90,36 @@ body {
     height: 200px;
     object-fit: cover;
     width: 92%;
-    margin: 4% auto 0; /* Imagen flotante dentro de la card */
+    margin: 4% auto 0;
     transition: var(--transition);
 }
 
-.card-service:hover img {
-    transform: scale(1.05);
-}
-
-/* Contenedor de contenido para empujar el botón */
 .card-service .card-body-content {
-    flex-grow: 1; /* Esto empuja el botón hacia abajo */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
 }
 
+/* Títulos Alineados */
 .card-service h5 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Agregado el guion faltante al inicio */
+    line-clamp: 2;          /* Versión estándar que pide el editor */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 3rem;
     margin-top: 10px;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--dark-text);
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.4;
 }
 
-/* --- Botones Alineados --- */
+/* --- Botones --- */
 .btn-add {
-    margin-top: auto; /* Alineación mágica: empuja el botón al final de la tarjeta */
+    margin-top: auto;
     border-radius: 15px !important;
     font-weight: 700 !important;
     padding: 14px !important;
@@ -133,11 +128,7 @@ body {
     letter-spacing: 1px;
     width: 100%;
     transition: var(--transition);
-    position: relative;
-    overflow: hidden;
 }
-
-.btn-add:active { transform: scale(0.95); }
 
 .btn-primary { 
     background: linear-gradient(45deg, var(--primary-blue), var(--accent-blue));
@@ -145,47 +136,53 @@ body {
     box-shadow: 0 4px 15px rgba(0, 86, 179, 0.3);
 }
 
-.btn-info { 
-    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-    border: none; 
-    color: white !important;
-}
-
-/* --- Acordeón Estilizado --- */
-.accordion-item {
-    border-radius: 18px !important;
-    margin-bottom: 12px;
+.btn-success {
+    background: linear-gradient(45deg, #25d366, #128c7e) !important;
     border: none !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    overflow: hidden;
 }
 
-.accordion-button {
-    border-radius: 18px !important;
-    font-weight: 600;
-    padding: 18px;
-    font-size: 1rem;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: #f0f7ff;
-    color: var(--primary-blue);
-    box-shadow: none;
-}
-
-/* --- Títulos de Categoría --- */
-.category-title {
-    font-weight: 800;
-    margin: 45px 0 25px;
-    padding-left: 18px;
-    border-left: 6px solid var(--accent-blue);
+/* --- Formulario de Pedido (Inputs y Labels) --- */
+label.small {
+    font-size: 0.75rem !important;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 1.25rem;
-    color: var(--primary-blue);
+    letter-spacing: 0.5px;
+    color: var(--primary-blue) !important;
+    margin-bottom: 4px;
+    display: block;
+    font-weight: 700;
 }
 
-/* --- Carrito Flotante --- */
+.form-control, .form-select {
+    border-radius: 10px !important;
+    border: 1px solid #dee2e6 !important;
+    padding: 10px 12px !important;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+/* --- Modales y Progreso --- */
+.modal-content {
+    border-radius: 25px !important;
+    border: none !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.progress {
+    background-color: #e9ecef;
+    border-radius: 50px;
+    height: 12px !important;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+}
+
+/* --- Carrito y WhatsApp Flotante --- */
 .cart-float {
     position: fixed;
     bottom: 100px;
@@ -201,52 +198,8 @@ body {
     border: 3px solid white;
     z-index: 999;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    transition: var(--transition);
 }
 
-.cart-float:hover { transform: scale(1.1) rotate(-10deg); }
-
-.badge-cart {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #ff4757;
-    color: white;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    font-size: 0.85rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* --- Menú Inferior (App Style) --- */
-.navbar.fixed-bottom {
-    border-radius: 30px 30px 0 0;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
-    background: rgba(255, 255, 255, 0.98) !important;
-    backdrop-filter: blur(15px);
-    padding: 10px 0;
-}
-
-.nav-link {
-    transition: var(--transition);
-    padding: 8px !important;
-    border-radius: 12px;
-}
-
-.nav-link i { font-size: 1.4rem; margin-bottom: 4px; }
-
-.nav-link:active {
-    transform: translateY(-5px);
-    background: rgba(0, 168, 232, 0.1);
-}
-
-/* --- WhatsApp Float Responsivo --- */
 .whatsapp-float {
     position: fixed;
     bottom: 90px;
@@ -256,59 +209,29 @@ body {
     border-radius: 50px;
     padding: 14px 28px;
     z-index: 1000;
-    text-decoration: none !important;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
     display: flex;
     align-items: center;
     gap: 12px;
-    font-weight: 700;
-    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-    transition: var(--transition);
-    border: 2px solid rgba(255,255,255,0.2);
 }
 
-.whatsapp-float:hover {
-    transform: scale(1.08) translateY(-5px);
-    color: white;
-    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.5);
+/* --- Menú Inferior --- */
+.navbar.fixed-bottom {
+    border-radius: 30px 30px 0 0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(15px);
 }
 
-/* --- Animaciones --- */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.card-service {
-    animation: fadeIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* --- Mejoras Responsivas (Móviles) --- */
+/* --- Responsivo --- */
 @media (max-width: 768px) {
-    .hero {
-        padding: 60px 20px 100px;
-        border-radius: 0 0 30px 30px;
-    }
     .hero h1 { font-size: 2.4rem; }
-    
-    .whatsapp-float .text-float {
-        display: none; /* Oculta textoAyuda en móviles para no tapar contenido */
-    }
-    .whatsapp-float {
-        padding: 18px;
-        border-radius: 50%;
-        bottom: 100px;
-    }
-    .card-service img {
-        height: 160px;
-    }
-    .cart-float {
-        width: 55px;
-        height: 55px;
-        bottom: 100px;
-    }
+    .whatsapp-float .text-float { display: none; }
+    .whatsapp-float { padding: 18px; border-radius: 50%; bottom: 100px; }
+    .card-service img { height: 160px; }
 }
 
-/* Estilo para el Scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
 ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 10px; }
